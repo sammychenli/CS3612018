@@ -2,12 +2,14 @@
 
 // Implementation of the Recursive Descent Parser algorithm
 
-//  Each method corresponds to a concrete syntax grammar rule, 
+//  Each method corresponds to a concrete syntax grammar rule,
 // which appears as a comment at the beginning of the method.
 
 // This code DOES NOT implement a parser for JAY. You have to complete
 // the code and also make sure it implements a parser for JAY - not something
 // else.
+
+// notes : "{}" are not matched; "()" Are
 
 public class ConcreteSyntax {
 
@@ -35,7 +37,8 @@ public class ConcreteSyntax {
 	// token otherwise generate an error message
 	private void match(String s) {
 		if (token.getValue().equals(s))
-			token = input.nextToken();
+			{token = input.nextToken();
+			System.out.println(s + " IS TRUE");}
 		else
 			throw new RuntimeException(SyntaxError(s));
 	}
@@ -44,7 +47,7 @@ public class ConcreteSyntax {
 
 	public Program program() {
 		// Program --> void main ( ) '{' Declarations Statements '}'
-		String[] header = { "main", "(", ")" };
+		String[] header = { "void", "main", "(", ")"};
 		Program p = new Program();
 		for (int i = 0; i < header.length; i++)
 			// bypass "void main ( )"
@@ -56,14 +59,14 @@ public class ConcreteSyntax {
 		return p;
 	}
 
-	private Declarations declarations() {
+	private Declarations declarations() { // Step 1 of RDP
 		// Declarations --> { Declaration }*
-		Declarations ds = new Declarations();
-		while (token.getValue().equals("int")
+		Declarations ds = new Declarations(); // Step 2 of RDP
+		while (token.getValue().equals("int") // Step 4 OF RDP
 				|| token.getValue().equals("bool")) {
 			declaration(ds);
 		}
-		return ds;
+		return ds; // Step 6 of RDP
 	}
 
 	private void declaration(Declarations ds) {
@@ -125,9 +128,9 @@ public class ConcreteSyntax {
 			s = ifStatement();
 		else if (token.getValue().equals("while")) {
 			// WhileStatement
-			// TO BE COMPLETED
+			s = whileStatement();
 		} else if (token.getType().equals("Identifier")) { // Assignment
-			// TO BE COMPLETED
+			s = assignment();
 		} else
 			throw new RuntimeException(SyntaxError("Statement"));
 		return s;
@@ -146,7 +149,13 @@ public class ConcreteSyntax {
 		// Assignment --> Identifier = Expression ;
 		Assignment a = new Assignment();
 		if (token.getType().equals("Identifier")) {
-			// TO BE COMPLETED
+			a.target = new Variable();
+			a.target.id = token.getValue();
+			token = input.nextToken();
+			match("=");
+			a.source = new Expression();
+			token = input.nextToken();
+			match(";");
 		} else
 			throw new RuntimeException(SyntaxError("Identifier"));
 		return a;
@@ -175,7 +184,10 @@ public class ConcreteSyntax {
 		e = relation();
 		while (token.getValue().equals("&&")) {
 			b = new Binary();
-			// TO BE COMPLETED
+			b.term1 = e;
+			b.op = new Operator(token.getValue());
+			token = input.nextToken();
+			b.term2 = relation();
 			e = b;
 		}
 		return e;
@@ -190,9 +202,12 @@ public class ConcreteSyntax {
 				|| token.getValue().equals(">")
 				|| token.getValue().equals(">=")
 				|| token.getValue().equals("==")
-				|| token.getValue().equals("<>")) {
+				|| token.getValue().equals("!=")) {
 			b = new Binary();
-			// TO BE COMPLETED
+			b.term1 = e;
+			b.op = new Operator(token.getValue());
+			token = input.nextToken();
+			b.term2 = addition();
 			e = b;
 		}
 		return e;
@@ -221,7 +236,10 @@ public class ConcreteSyntax {
 		e = negation();
 		while (token.getValue().equals("*") || token.getValue().equals("/")) {
 			b = new Binary();
-			// TO BE COMPLETED
+			b.term1 = e;
+			b.op = new Operator(token.getValue());
+			token = input.nextToken();
+			b.term2 = negation();
 			e = b;
 		}
 		return e;
@@ -272,14 +290,28 @@ public class ConcreteSyntax {
 	private Conditional ifStatement() {
 		// IfStatement --> if ( Expression ) Statement { else Statement }opt
 		Conditional c = new Conditional();
-		// TO BE COMPLETED
+		//NOTE: - Possible solution , *Will* Comment Later
+		match("if");
+ 		match("(");
+		c.test = expression();
+		match(")");
+		c.thenbranch = statement();
+		if (token.getValue().equals("else")) {
+				token = input.nextToken();
+				c.elsebranch = new Statement();
+		}
 		return c;
 	}
 
 	private Loop whileStatement() {
 		// WhileStatement --> while ( Expression ) Statement
 		Loop l = new Loop();
-		// TO BE COMPLETED
+		//NOTE: - Possible solution , *Will* Comment Later
+		match("while");
+		match("(");
+		l.test = expression();
+		match(")");
+		l.body = statement();
 		return l;
 	}
 
