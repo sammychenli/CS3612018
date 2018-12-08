@@ -28,7 +28,6 @@ public class ConcreteSyntax {
 	private String SyntaxError(String tok) {
 		String s = "Syntax error - Expecting: " + tok + " But saw: "
 				+ token.getType() + " = " + token.getValue();
-		System.out.println(s);
 		return s;
 		// System.exit(0);
 	}
