@@ -18,7 +18,7 @@ public class ConcreteSyntax {
 	public TokenStream input; // stream of tokens generated in by
 
 	// the lexical analysis
-
+	// NOTE: - Constructor
 	public ConcreteSyntax(TokenStream ts) { // Open the source program
 		input = ts; // as a TokenStream, and
 		token = input.nextToken(); // retrieve its first Token
@@ -28,6 +28,7 @@ public class ConcreteSyntax {
 	private String SyntaxError(String tok) {
 		String s = "Syntax error - Expecting: " + tok + " But saw: "
 				+ token.getType() + " = " + token.getValue();
+		System.out.println(s);
 		return s;
 		// System.exit(0);
 	}
@@ -152,8 +153,7 @@ public class ConcreteSyntax {
 			a.target.id = token.getValue();
 			token = input.nextToken();
 			match("=");
-			a.source = new Expression();
-			token = input.nextToken();
+			a.source = expression();
 			match(";");
 		} else
 			throw new RuntimeException(SyntaxError("Identifier"));
