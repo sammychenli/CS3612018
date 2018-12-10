@@ -55,11 +55,11 @@ public class TokenStream {
 			nextChar = readChar();
 			if (nextChar == '/') { // If / is followed by another /
 				// skip rest of line - it's a comment.
-				t.setType("Comment");
-				t.setValue("//");
+			//	t.setType("Comment");
+			//	t.setValue("//");
 				nextLine(); // skip the rest of the line
 				nextChar = readChar();
-				return t;
+			//	return t;
 				// look for <cr>, <lf>, <ff>
 			} else if (nextChar != '/') {
 				t.setType("Operator");
@@ -98,7 +98,6 @@ public class TokenStream {
 			t.setType("Separator");
 			t.setValue(t.getValue() + nextChar);
 			nextChar = readChar();
-			// TO BE COMPLETED
 			return t;
 		}
 
@@ -111,7 +110,7 @@ public class TokenStream {
 				nextChar = readChar();
 				//Check if Boolean Value
 				if( isBoolean(t.getValue())) {
-					t.setType("Boolean-Literal");
+					t.setType("Literal");
 					return t;
 				}
 			}
@@ -123,7 +122,7 @@ public class TokenStream {
 		}
 
 		if (isDigit(nextChar)) { // check for integers
-			t.setType("Integer-Literal");
+			t.setType("Literal");
 			while (isDigit(nextChar)) {
 				t.setValue(t.getValue() + nextChar);
 				nextChar = readChar();

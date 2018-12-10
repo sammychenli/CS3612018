@@ -79,7 +79,7 @@ class Type {
 	public String id;
 
 	final static String INTEGER = "int";
-	final static String BOOLEAN = "bool";
+	final static String BOOLEAN = "boolean";
 	final static String UNDEFINED = "undef";
 
 	public Type(String t) {
@@ -205,7 +205,7 @@ class Variable extends Expression {
 }
 
 class Value extends Expression {
-	// Value = int intValue | bool boolValue
+	// Value = int intValue | boolean boolValue
 
 	public Type type;
 

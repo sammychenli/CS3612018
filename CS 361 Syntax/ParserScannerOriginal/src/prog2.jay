@@ -10,7 +10,8 @@ void main () {
       temp = fib0;
       fib0 = fib1;
       fib1 = fib0 + temp;
-      n = n - 1;
+      n = n - 1;=
    }
    result = fib0;
 }
+

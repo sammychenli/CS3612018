@@ -6,7 +6,7 @@ public class ScannerDemo {
 	
 	private static String prog1 = "/Users/sammychenli/eclipse-workspace/ParserScannerTests/SCANNER/prog1.jay";
 	private static String prog2 = "/Users/sammychenli/eclipse-workspace/ParserScannerOriginal/src/prog2.jay";
-	private static String prog3 = "/Users/sammychenli/eclipse-workspace/ParserScannerOriginal/src/moreTests.jay";
+	private static String prog3 = "/Users/sammychenli/eclipse-workspace/ParserScannerOriginal/src/moreScannerTests.jay";
 	
 	private static int counter = 1;
 
