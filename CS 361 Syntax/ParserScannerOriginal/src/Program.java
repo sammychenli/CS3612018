@@ -285,7 +285,7 @@ class Operator {
 	final static String LT = "<";
 	final static String LE = "<=";
 	final static String EQ = "==";
-	final static String NE = "!>";
+	final static String NE = "!=";
 	final static String GT = ">";
 	final static String GE = ">=";
 	// ArithmeticOp = + | - | * | /
