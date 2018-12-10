@@ -40,7 +40,7 @@ public class TokenStream {
 
 	public Token nextToken() { // Return next token type and value.
 		Token t = new Token();
-		t.setType("Lexical Error");
+		t.setType("Other");
 		t.setValue("");
 
 		// First check for whitespace and bypass it.
@@ -55,11 +55,8 @@ public class TokenStream {
 			nextChar = readChar();
 			if (nextChar == '/') { // If / is followed by another /
 				// skip rest of line - it's a comment.
-				t.setType("Comment");
-				t.setValue("//");
 				nextLine(); // skip the rest of the line
 				nextChar = readChar();
-				return t;
 				// look for <cr>, <lf>, <ff>
 			} else if (nextChar != '/') {
 				t.setType("Operator");
@@ -88,7 +85,7 @@ public class TokenStream {
 
 				return t;
 			default: // all other operators
-				nextChar = readChar(); 
+				nextChar = readChar();
 				return t;
 			}
 		}
@@ -111,7 +108,7 @@ public class TokenStream {
 				nextChar = readChar();
 				//Check if Boolean Value
 				if( isBoolean(t.getValue())) {
-					t.setType("Boolean-Literal");
+					t.setType("Literal");
 					return t;
 				}
 			}
@@ -123,7 +120,7 @@ public class TokenStream {
 		}
 
 		if (isDigit(nextChar)) { // check for integers
-			t.setType("Integer-Literal");
+			t.setType("Literal");
 			while (isDigit(nextChar)) {
 				t.setValue(t.getValue() + nextChar);
 				nextChar = readChar();
@@ -140,9 +137,9 @@ public class TokenStream {
 		//Check for or (||) operator value
 		if (nextChar == '|') {
 			nextChar = readChar();
-			t.setType("Lexical Error");
+			t.setType("Other");
 			t.setValue("|");
-			if (nextChar == '|') { 
+			if (nextChar == '|') {
 				t.setType("Operator");
 				t.setValue(t.getValue() + nextChar);
 				nextChar = readChar();
@@ -152,9 +149,9 @@ public class TokenStream {
 		//Check for and (&&) operator value
 		if (nextChar == '&') {
 			nextChar = readChar();
-			t.setType("Lexical Error");
+			t.setType("Other");
 			t.setValue("&");
-			if (nextChar == '&') { 
+			if (nextChar == '&') {
 				t.setType("Operator");
 				t.setValue(t.getValue() + nextChar);
 				nextChar = readChar();
@@ -163,13 +160,13 @@ public class TokenStream {
 		}
 
 		while (!isEndOfToken(nextChar)) {
-			t.setType("Lexical Error");
+			t.setType("Other");
 			t.setValue(t.getValue() + nextChar);
 			nextChar = readChar();
 		}
 
 		return t;
-	} 
+	}
 
 	private void nextLine() {
 		try {
@@ -231,7 +228,7 @@ public class TokenStream {
 
 	// for single char operators
 	private boolean isOperator(char c) {
-		return 	c == '=' || c == '+' || c == '-' || c == '*' || c == '/' || c == '<' || 
+		return 	c == '=' || c == '+' || c == '-' || c == '*' || c == '/' || c == '<' ||
 				c == '>' || c == '!' ;
 	}
 
