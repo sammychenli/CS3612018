@@ -55,11 +55,8 @@ public class TokenStream {
 			nextChar = readChar();
 			if (nextChar == '/') { // If / is followed by another /
 				// skip rest of line - it's a comment.
-				t.setType("Comment");
-				t.setValue("//");
 				nextLine(); // skip the rest of the line
 				nextChar = readChar();
-				return t;
 				// look for <cr>, <lf>, <ff>
 			} else if (nextChar != '/') {
 				t.setType("Operator");
