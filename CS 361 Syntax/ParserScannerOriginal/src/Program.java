@@ -2,7 +2,7 @@
 
 // NOT TO BE MODIFIED (except if you are sure there is a bug!)
 
-// Abstract syntax of JAY 
+// Abstract syntax of JAY
 
 // Display methods are added to facilitate debugging and experimentation
 
@@ -11,6 +11,14 @@ import java.util.Vector;
 
 public class Program {
 	// Program = Declarations decpart ; Block body
+
+	public static void main(String[] args) {
+		Assignment a = new Assignment();
+		a.target = new Variable();
+		a.target.id = "x";
+		a.source = new Value(5);
+		System.out.println(a.display(0));
+	}
 
 	public Declarations decpart;
 	public Block body;
@@ -63,7 +71,6 @@ class Declarations extends Vector {
 }
 
 class Declaration {
-	// Declaration = Variable v; Type t
 
 	public Variable v;
 	public Type t;
@@ -117,7 +124,7 @@ class Skip extends Statement {
 
 class Block extends Statement {
 	// Block = Statement*
-	//		   (a Vector of members) 
+	//		   (a Vector of members)
 
 	public Vector blockmembers = new Vector();
 
@@ -278,7 +285,7 @@ class Operator {
 	final static String LT = "<";
 	final static String LE = "<=";
 	final static String EQ = "==";
-	final static String NE = "<>";
+	final static String NE = "!>";
 	final static String GT = ">";
 	final static String GE = ">=";
 	// ArithmeticOp = + | - | * | /
@@ -286,7 +293,7 @@ class Operator {
 	final static String MINUS = "-";
 	final static String TIMES = "*";
 	final static String DIV = "/";
-	// UnaryOp = !    
+	// UnaryOp = !
 	final static String NOT = "!";
 
 	public Operator(String s) {
